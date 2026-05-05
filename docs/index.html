@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>matcom GitHub Organization - Repositories Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+        #graph { width: 100vw; height: 100vh; }
+        .node { cursor: pointer; }
+        .node:hover { filter: brightness(1.3); }
+        .link { stroke: #30363d; stroke-opacity: 0.6; }
+        .node-text { fill: #c9d1d9; font-size: 11px; pointer-events: none; text-anchor: middle; }
+        .node-text-center { fill: white; font-weight: bold; font-size: 14px; }
+        .tooltip { position: absolute; padding: 10px; background: rgba(13, 17, 23, 0.95); border: 1px solid #30363d; border-radius: 6px; pointer-events: none; font-size: 12px; max-width: 300px; display: none; z-index: 1000; }
+        .tooltip a { color: #58a6ff; text-decoration: none; }
+        .tooltip a:hover { text-decoration: underline; }
+        .legend { position: absolute; top: 20px; right: 20px; background: rgba(13, 17, 23, 0.9); border: 1px solid #30363d; border-radius: 6px; padding: 15px; font-size: 12px; }
+        .legend h3 { margin-bottom: 10px; color: #58a6ff; }
+        .legend-item { display: flex; align-items: center; margin-bottom: 5px; }
+        .legend-color { width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; }
+        .controls { position: absolute; bottom: 20px; left: 20px; background: rgba(13, 17, 23, 0.9); border: 1px solid #30363d; border-radius: 6px; padding: 10px; font-size: 12px; }
+        .controls button { background: #238636; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        .controls button:hover { background: #2ea043; }
+        .repo-count { position: absolute; top: 20px; left: 20px; background: rgba(13, 17, 23, 0.9); border: 1px solid #30363d; border-radius: 6px; padding: 10px 15px; font-size: 14px; }
+        .repo-count strong { color: #58a6ff; }
+    </style>
+</head>
+<body>
+    <div id="graph"></div>
+    <div class="tooltip" id="tooltip"></div>
+    <div class="repo-count" id="repoCount"></div>
+    <div class="legend" id="legend"></div>
+    <div class="controls">
+        <button onclick="expandAll()">Expand All</button>
+        <button onclick="collapseAll()">Collapse All</button>
+        <button onclick="resetView()">Reset View</button>
+    </div>
+
+    <script>
+        let graphData, simulation, svg, g, zoom;
+        let expandedCats = new Set();
+        let originalNodes = [], originalEdges = [];
+
+        const width = window.innerWidth, height = window.innerHeight;
+        const centerX = width / 2, centerY = height / 2;
+
+        fetch('repos_data.json')
+            .then(r => r.json())
+            .then(data => {
+                graphData = data;
+                originalNodes = data.nodes;
+                originalEdges = data.edges;
+                initGraph();
+                setupLegend();
+                updateRepoCount();
+            });
+
+        function initGraph() {
+            svg = d3.select('#graph')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            zoom = d3.zoom()
+                .scaleExtent([0.1, 4])
+                .on('zoom', (e) => g.attr('transform', e.transform));
+
+            svg.call(zoom);
+
+            g = svg.append('g');
+
+            updateGraph();
+        }
+
+        function getVisibleData() {
+            const catNodes = originalNodes.filter(n => n.level === 1);
+            const matcomNode = originalNodes.find(n => n.level === 0);
+            const repoNodes = originalNodes.filter(n => n.level === 2);
+
+            let visibleNodes = [matcomNode, ...catNodes];
+            let visibleEdges = originalEdges.filter(e => e.source === 'matcom' || e.target === 'matcom');
+
+            expandedCats.forEach(catId => {
+                const catRepos = repoNodes.filter(r => r.category_id === catId.replace('cat-', ''));
+                visibleNodes.push(...catRepos);
+                catRepos.forEach(r => {
+                    visibleEdges.push({ source: catId, target: r.id });
+                });
+            });
+
+            return { nodes: visibleNodes, edges: visibleEdges };
+        }
+
+        function updateGraph() {
+            const { nodes, edges } = getVisibleData();
+
+            const nodeMap = {};
+            nodes.forEach(n => nodeMap[n.id] = n);
+
+            const links = edges.map(e => ({
+                source: nodeMap[e.source] || e.source,
+                target: nodeMap[e.target] || e.target
+            }));
+
+            if (simulation) simulation.stop();
+
+            g.selectAll('.link').remove();
+            g.selectAll('.node').remove();
+
+            const link = g.append('g')
+                .attr('class', 'link')
+                .selectAll('line')
+                .data(links)
+                .join('line')
+                .attr('class', 'link')
+                .attr('stroke-width', 1.5);
+
+            const node = g.append('g')
+                .attr('class', 'node')
+                .selectAll('g')
+                .data(nodes)
+                .join('g')
+                .attr('class', 'node')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            node.append('circle')
+                .attr('r', d => {
+                    if (d.level === 0) return 30;
+                    if (d.level === 1) return 18;
+                    return 5 + Math.min(d.stars * 0.3, 15);
+                })
+                .attr('fill', d => d.color)
+                .attr('stroke', d => d.level === 0 ? '#fff' : 'none')
+                .attr('stroke-width', d => d.level === 0 ? 3 : 0);
+
+            node.append('text')
+                .attr('class', d => d.level === 0 ? 'node-text node-text-center' : 'node-text')
+                .attr('dy', d => d.level === 0 ? '5px' : d.level === 1 ? '25px' : '20px')
+                .text(d => d.level === 0 ? 'matcom' : (d.level === 1 ? d.name : d.name.substring(0, 15) + (d.name.length > 15 ? '...' : '')));
+
+            node.on('click', (e, d) => {
+                if (d.level === 1) {
+                    const catId = d.id;
+                    if (expandedCats.has(catId)) {
+                        expandedCats.delete(catId);
+                    } else {
+                        expandedCats.add(catId);
+                    }
+                    updateGraph();
+                    updateRepoCount();
+                } else if (d.level === 2 && d.url) {
+                    window.open(d.url, '_blank');
+                }
+            });
+
+            node.on('mouseover', (e, d) => {
+                const tooltip = d3.select('#tooltip');
+                let html = `<strong>${d.name}</strong><br>`;
+                if (d.description) html += `${d.description}<br>`;
+                if (d.url) html += `<a href="${d.url}" target="_blank">${d.url}</a><br>`;
+                if (d.stars > 0) html += `⭐ ${d.stars} stars<br>`;
+                if (d.language && d.language !== 'Unknown') html += `🔤 ${d.language}`;
+                tooltip.html(html)
+                    .style('display', 'block')
+                    .style('left', (e.pageX + 15) + 'px')
+                    .style('top', (e.pageY - 15) + 'px');
+            });
+
+            node.on('mousemove', (e) => {
+                d3.select('#tooltip')
+                    .style('left', (e.pageX + 15) + 'px')
+                    .style('top', (e.pageY - 15) + 'px');
+            });
+
+            node.on('mouseout', () => {
+                d3.select('#tooltip').style('display', 'none');
+            });
+
+            simulation = d3.forceSimulation(nodes)
+                .force('link', d3.forceLink(links).id(d => d.id).distance(d => {
+                    if (d.source.level === 0) return 200;
+                    return 100;
+                }).strength(0.5))
+                .force('charge', d3.forceManyBody().strength(-300))
+                .force('center', d3.forceCenter(centerX, centerY))
+                .force('x', d3.forceX(centerX).strength(0.05))
+                .force('y', d3.forceY(centerY).strength(0.05))
+                .on('tick', () => {
+                    link
+                        .attr('x1', d => d.source.x)
+                        .attr('y1', d => d.source.y)
+                        .attr('x2', d => d.target.x)
+                        .attr('y2', d => d.target.y);
+
+                    node
+                        .attr('transform', d => `translate(${d.x},${d.y})`);
+                });
+
+            nodes.forEach(n => {
+                n.fx = null;
+                n.fy = null;
+                if (n.level === 0) {
+                    n.fx = centerX;
+                    n.fy = centerY;
+                }
+            });
+        }
+
+        function dragstarted(e, d) {
+            if (!e.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(e, d) {
+            d.fx = e.x;
+            d.fy = e.y;
+        }
+
+        function dragended(e, d) {
+            if (!e.active) simulation.alphaTarget(0);
+            if (d.level !== 0) {
+                d.fx = null;
+                d.fy = null;
+            }
+        }
+
+        function setupLegend() {
+            const legend = d3.select('#legend');
+            legend.html('<h3>Categories</h3>');
+            graphData.categories.forEach(cat => {
+                const item = legend.append('div').attr('class', 'legend-item');
+                item.append('div')
+                    .attr('class', 'legend-color')
+                    .style('background', cat.color)
+                    .style('cursor', 'pointer')
+                    .on('click', () => {
+                        const catId = 'cat-' + cat.id;
+                        if (expandedCats.has(catId)) {
+                            expandedCats.delete(catId);
+                        } else {
+                            expandedCats.add(catId);
+                        }
+                        updateGraph();
+                        updateRepoCount();
+                    });
+                item.append('span').text(cat.name);
+            });
+        }
+
+        function updateRepoCount() {
+            const totalRepos = originalNodes.filter(n => n.level === 2).length;
+            const visibleRepos = expandedCats.size > 0
+                ? Array.from(expandedCats).reduce((acc, catId) => {
+                    return acc + originalNodes.filter(n => n.level === 2 && n.category_id === catId.replace('cat-', '')).length;
+                }, 0)
+                : 0;
+            d3.select('#repoCount').html(`<strong>${visibleRepos}</strong> / ${totalRepos} repos visible<br><small>Click categories to expand</small>`);
+        }
+
+        function expandAll() {
+            graphData.categories.forEach(cat => expandedCats.add('cat-' + cat.id));
+            updateGraph();
+            updateRepoCount();
+        }
+
+        function collapseAll() {
+            expandedCats.clear();
+            updateGraph();
+            updateRepoCount();
+        }
+
+        function resetView() {
+            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        }
+
+        window.addEventListener('resize', () => {
+            const newWidth = window.innerWidth, newHeight = window.innerHeight;
+            svg.attr('width', newWidth).attr('height', newHeight);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1133 @@
+{
+  "nodes": [
+    {
+      "id": "matcom",
+      "name": "matcom",
+      "level": 0,
+      "url": "https://github.com/matcom",
+      "stars": 0,
+      "language": "Organization",
+      "description": "School of Math and Computer Science, University of Havana",
+      "category_id": null,
+      "color": "#ff0000"
+    },
+    {
+      "id": "cat-programming",
+      "name": "Programming",
+      "level": 1,
+      "url": null,
+      "stars": 0,
+      "language": "Category",
+      "description": "Programming repositories",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "cat-ml-ai",
+      "name": "ML/AI",
+      "level": 1,
+      "url": null,
+      "stars": 0,
+      "language": "Category",
+      "description": "ML/AI repositories",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "cat-compilers",
+      "name": "Compilers",
+      "level": 1,
+      "url": null,
+      "stars": 0,
+      "language": "Category",
+      "description": "Compilers repositories",
+      "category_id": "compilers",
+      "color": "#2ca02c"
+    },
+    {
+      "id": "cat-networks-distributed",
+      "name": "Networks/Distributed",
+      "level": 1,
+      "url": null,
+      "stars": 0,
+      "language": "Category",
+      "description": "Networks/Distributed repositories",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "cat-algorithms",
+      "name": "Algorithms",
+      "level": 1,
+      "url": null,
+      "stars": 0,
+      "language": "Category",
+      "description": "Algorithms repositories",
+      "category_id": "algorithms",
+      "color": "#9467bd"
+    },
+    {
+      "id": "cat-tools-projects",
+      "name": "Tools/Projects",
+      "level": 1,
+      "url": null,
+      "stars": 0,
+      "language": "Category",
+      "description": "Tools/Projects repositories",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "cat-documentation",
+      "name": "Documentation",
+      "level": 1,
+      "url": null,
+      "stars": 0,
+      "language": "Category",
+      "description": "Documentation repositories",
+      "category_id": "documentation",
+      "color": "#e377c2"
+    },
+    {
+      "id": "dashboard_v2",
+      "name": "dashboard_v2",
+      "level": 2,
+      "url": "https://github.com/matcom/dashboard_v2",
+      "stars": 0,
+      "language": "C#",
+      "description": "No description",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "gym",
+      "name": "gym",
+      "level": 2,
+      "url": "https://github.com/matcom/gym",
+      "stars": 6,
+      "language": "Python",
+      "description": "Coding gym for MatCom students",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "compilers",
+      "name": "compilers",
+      "level": 2,
+      "url": "https://github.com/matcom/compilers",
+      "stars": 1,
+      "language": "JavaScript",
+      "description": "Official Compilers course for CS Major (Spanish)",
+      "category_id": "compilers",
+      "color": "#2ca02c"
+    },
+    {
+      "id": "hulk",
+      "name": "hulk",
+      "level": 2,
+      "url": "https://github.com/matcom/hulk",
+      "stars": 19,
+      "language": "Python",
+      "description": "Reference definition for the HULK language.",
+      "category_id": "compilers",
+      "color": "#2ca02c"
+    },
+    {
+      "id": "codex",
+      "name": "codex",
+      "level": 2,
+      "url": "https://github.com/matcom/codex",
+      "stars": 14,
+      "language": "Python",
+      "description": "Reference Python implementations of algorithms and data structures",
+      "category_id": "algorithms",
+      "color": "#9467bd"
+    },
+    {
+      "id": "ml",
+      "name": "ml",
+      "level": 2,
+      "url": "https://github.com/matcom/ml",
+      "stars": 16,
+      "language": "Python",
+      "description": "Base machine learning image and environment.",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "dm",
+      "name": "dm",
+      "level": 2,
+      "url": "https://github.com/matcom/dm",
+      "stars": 50,
+      "language": "TeX",
+      "description": "Notas de conferencias, ejercicios, y ex\u00e1menes, de las asignaturas Matem\u00e1tica Discreta I y II",
+      "category_id": "algorithms",
+      "color": "#9467bd"
+    },
+    {
+      "id": "matcom.github.io",
+      "name": "matcom.github.io",
+      "level": 2,
+      "url": "https://github.com/matcom/matcom.github.io",
+      "stars": 16,
+      "language": "HTML",
+      "description": "Informaci\u00f3n general sobre la Facultad de Matem\u00e1tica y Computaci\u00f3n de la Universidad de La Habana",
+      "category_id": "documentation",
+      "color": "#e377c2"
+    },
+    {
+      "id": "autoexam",
+      "name": "autoexam",
+      "level": 2,
+      "url": "https://github.com/matcom/autoexam",
+      "stars": 14,
+      "language": "Python",
+      "description": "A simple exam generator and grader written in Python with OpenCV",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "computer-networks-projects-2025",
+      "name": "computer-networks-projects-2025",
+      "level": 2,
+      "url": "https://github.com/matcom/computer-networks-projects-2025",
+      "stars": 1,
+      "language": "Unknown",
+      "description": "Repositorio para la entrega del proyecto de la asignatura Redes de Computadoras, curso 2025.",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "computer-networks-materials-2025",
+      "name": "computer-networks-materials-2025",
+      "level": 2,
+      "url": "https://github.com/matcom/computer-networks-materials-2025",
+      "stars": 0,
+      "language": "TeX",
+      "description": "Materiales docentes correspondientes al curso 2025 de la asignatura Redes de Computadoras",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "distributed-systems-projects-2025",
+      "name": "distributed-systems-projects-2025",
+      "level": 2,
+      "url": "https://github.com/matcom/distributed-systems-projects-2025",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Repositorio para la entrega del proyecto de la asignatura Sistemas Distribuidos, curso 2025.",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "distributed-systems-materials-2025",
+      "name": "distributed-systems-materials-2025",
+      "level": 2,
+      "url": "https://github.com/matcom/distributed-systems-materials-2025",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Repositorio para la entrega del proyecto de la asignatura Sistemas Distribuidos, curso 2025.",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "ml-25-26",
+      "name": "ml-25-26",
+      "level": 2,
+      "url": "https://github.com/matcom/ml-25-26",
+      "stars": 1,
+      "language": "Unknown",
+      "description": "Repositorio para los proyectos de Aprendizaje de M\u00e1quina - Curso 25-26",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "adminbot",
+      "name": "adminbot",
+      "level": 2,
+      "url": "https://github.com/matcom/adminbot",
+      "stars": 3,
+      "language": "Python",
+      "description": "No description",
+      "category_id": "algorithms",
+      "color": "#9467bd"
+    },
+    {
+      "id": "scr_pasd_2025",
+      "name": "scr_pasd_2025",
+      "level": 2,
+      "url": "https://github.com/matcom/scr_pasd_2025",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Repositorio para le entrega del tercer proyecto de la asignatura Sistemas Computacionales y Redes. 2025",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "scr_lcp_2025",
+      "name": "scr_lcp_2025",
+      "level": 2,
+      "url": "https://github.com/matcom/scr_lcp_2025",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Repositorio para la entrega del 2do proyecto de la asignatura Sistemas Computacionales y Redes. Curso 2025",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "scr_shell_2025",
+      "name": "scr_shell_2025",
+      "level": 2,
+      "url": "https://github.com/matcom/scr_shell_2025",
+      "stars": 0,
+      "language": "Python",
+      "description": "Repositorio para la entrega del primer proyecto de la asignatura Sistemas Computacionales y Redes, correspondientes al curso 2025.",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "Sim2025-proy1",
+      "name": "Sim2025-proy1",
+      "level": 2,
+      "url": "https://github.com/matcom/Sim2025-proy1",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "master-ml",
+      "name": "master-ml",
+      "level": 2,
+      "url": "https://github.com/matcom/master-ml",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "ai",
+      "name": "ai",
+      "level": 2,
+      "url": "https://github.com/matcom/ai",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "computer_networks_fall_2024",
+      "name": "computer_networks_fall_2024",
+      "level": 2,
+      "url": "https://github.com/matcom/computer_networks_fall_2024",
+      "stars": 0,
+      "language": "Python",
+      "description": "No description",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "programming",
+      "name": "programming",
+      "level": 2,
+      "url": "https://github.com/matcom/programming",
+      "stars": 82,
+      "language": "C#",
+      "description": "Conferencias de Programaci\u00f3n para 1er a\u00f1o de CC",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "algos",
+      "name": "algos",
+      "level": 2,
+      "url": "https://github.com/matcom/algos",
+      "stars": 10,
+      "language": "Unknown",
+      "description": "Conferencias, ejemplos, notas, ejercicions, y m\u00e1s, sobre la asignatura Dise\u00f1o y An\u00e1lisis de Algoritmos",
+      "category_id": "algorithms",
+      "color": "#9467bd"
+    },
+    {
+      "id": "distributed-systems-fall-2024",
+      "name": "distributed-systems-fall-2024",
+      "level": 2,
+      "url": "https://github.com/matcom/distributed-systems-fall-2024",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "templates",
+      "name": "templates",
+      "level": 2,
+      "url": "https://github.com/matcom/templates",
+      "stars": 1,
+      "language": "Python",
+      "description": "No description",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "ML-24-25",
+      "name": "ML-24-25",
+      "level": 2,
+      "url": "https://github.com/matcom/ML-24-25",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Repositorios de proyectos de Machine Learning del curso 2024-2025",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "tesis-24",
+      "name": "tesis-24",
+      "level": 2,
+      "url": "https://github.com/matcom/tesis-24",
+      "stars": 1,
+      "language": "Unknown",
+      "description": "Repositorio central de Tesis MatCom 2024",
+      "category_id": "documentation",
+      "color": "#e377c2"
+    },
+    {
+      "id": "tesis-25",
+      "name": "tesis-25",
+      "level": 2,
+      "url": "https://github.com/matcom/tesis-25",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Repositorio central de Tesis MatCom",
+      "category_id": "documentation",
+      "color": "#e377c2"
+    },
+    {
+      "id": "programming-cp",
+      "name": "programming-cp",
+      "level": 2,
+      "url": "https://github.com/matcom/programming-cp",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Ejercicios de pr\u00e1ctica para estudiantes de CC",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "pncti",
+      "name": "pncti",
+      "level": 2,
+      "url": "https://github.com/matcom/pncti",
+      "stars": 0,
+      "language": "Python",
+      "description": "Sistema de Gesti\u00f3n de Programas Nacionales de Ciencia, Tecnolog\u00eda e Innovaci\u00f3n",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "distributed-systems-spring-2024",
+      "name": "distributed-systems-spring-2024",
+      "level": 2,
+      "url": "https://github.com/matcom/distributed-systems-spring-2024",
+      "stars": 1,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "computer-networks-2024",
+      "name": "computer-networks-2024",
+      "level": 2,
+      "url": "https://github.com/matcom/computer-networks-2024",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Proyecto de la asignatura redes de computadoras. Curso 2024",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "programming-languages",
+      "name": "programming-languages",
+      "level": 2,
+      "url": "https://github.com/matcom/programming-languages",
+      "stars": 5,
+      "language": "Unknown",
+      "description": "Repositorio para mantener los recursos como conferencias, seminarios y dem\u00e1s, referentes a la asignatura de Lenguajes de Programaci\u00f3n de la carrera de Ciencia de la Computaci\u00f3n de la Facultad de Matem\u00e1tica y Computaci\u00f3n de la Universidad de La Habana.",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "thesis",
+      "name": "thesis",
+      "level": 2,
+      "url": "https://github.com/matcom/thesis",
+      "stars": 28,
+      "language": "TeX",
+      "description": "Latex template for students thesis of MatCom",
+      "category_id": "documentation",
+      "color": "#e377c2"
+    },
+    {
+      "id": "cs",
+      "name": "cs",
+      "level": 2,
+      "url": "https://github.com/matcom/cs",
+      "stars": 5,
+      "language": "HTML",
+      "description": "A wiki-like repository of concepts about computer science",
+      "category_id": "algorithms",
+      "color": "#9467bd"
+    },
+    {
+      "id": "dashboard",
+      "name": "dashboard",
+      "level": 2,
+      "url": "https://github.com/matcom/dashboard",
+      "stars": 7,
+      "language": "Python",
+      "description": "No description",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "practicas-primero-2023",
+      "name": "practicas-primero-2023",
+      "level": 2,
+      "url": "https://github.com/matcom/practicas-primero-2023",
+      "stars": 3,
+      "language": "Unknown",
+      "description": "Repositorio para las pr\u00e1cticas profesionales de Primer A\u00f1o de CC y CD en el curso 2023",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "metaheuristics",
+      "name": "metaheuristics",
+      "level": 2,
+      "url": "https://github.com/matcom/metaheuristics",
+      "stars": 15,
+      "language": "Jupyter Notebook",
+      "description": "A crash course on metaheuristics, graduate level",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "matcom-sist-dist-2023",
+      "name": "matcom-sist-dist-2023",
+      "level": 2,
+      "url": "https://github.com/matcom/matcom-sist-dist-2023",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "matcon-sd-2023",
+      "name": "matcon-sd-2023",
+      "level": 2,
+      "url": "https://github.com/matcom/matcon-sd-2023",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": "covidsim",
+      "name": "covidsim",
+      "level": 2,
+      "url": "https://github.com/matcom/covidsim",
+      "stars": 0,
+      "language": "Python",
+      "description": "No description",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "programming-for-data-science",
+      "name": "programming-for-data-science",
+      "level": 2,
+      "url": "https://github.com/matcom/programming-for-data-science",
+      "stars": 6,
+      "language": "Jupyter Notebook",
+      "description": "Curso de Programaci\u00f3n para la carrera de Ciencia de Datos de la Facultad de Matem\u00e1tica y Computaci\u00f3n de la Universidad de La Habana.",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "moogle",
+      "name": "moogle",
+      "level": 2,
+      "url": "https://github.com/matcom/moogle",
+      "stars": 47,
+      "language": "CSS",
+      "description": "Proyecto de Programaci\u00f3n I",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "ML-2023",
+      "name": "ML-2023",
+      "level": 2,
+      "url": "https://github.com/matcom/ML-2023",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "cool-compiler-2021",
+      "name": "cool-compiler-2021",
+      "level": 2,
+      "url": "https://github.com/matcom/cool-compiler-2021",
+      "stars": 3,
+      "language": "Cool",
+      "description": "No description",
+      "category_id": "compilers",
+      "color": "#2ca02c"
+    },
+    {
+      "id": "horarios",
+      "name": "horarios",
+      "level": 2,
+      "url": "https://github.com/matcom/horarios",
+      "stars": 1,
+      "language": "TypeScript",
+      "description": "Sistema de gestion de horarios de la facultad de matem\u00e1tica",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "domino",
+      "name": "domino",
+      "level": 2,
+      "url": "https://github.com/matcom/domino",
+      "stars": 14,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "ia-sim-2022",
+      "name": "ia-sim-2022",
+      "level": 2,
+      "url": "https://github.com/matcom/ia-sim-2022",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "Proyectos de IA-Simulaci\u00f3n (Curso 2022)",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "AI-proj-22",
+      "name": "AI-proj-22",
+      "level": 2,
+      "url": "https://github.com/matcom/AI-proj-22",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "matcom-tester",
+      "name": "matcom-tester",
+      "level": 2,
+      "url": "https://github.com/matcom/matcom-tester",
+      "stars": 2,
+      "language": "C#",
+      "description": "This solution is a template to develop testers for the Programming courses of MatCom.",
+      "category_id": "programming",
+      "color": "#1f77b4"
+    },
+    {
+      "id": "forms",
+      "name": "forms",
+      "level": 2,
+      "url": "https://github.com/matcom/forms",
+      "stars": 1,
+      "language": "HTML",
+      "description": "Redirect para introducir una nueva actividad de investigaci\u00f3n",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "covid19-analysis",
+      "name": "covid19-analysis",
+      "level": 2,
+      "url": "https://github.com/matcom/covid19-analysis",
+      "stars": 6,
+      "language": "Jupyter Notebook",
+      "description": "Data science and machine learning applied to understanding COVID-19",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "ML-proj-22",
+      "name": "ML-proj-22",
+      "level": 2,
+      "url": "https://github.com/matcom/ML-proj-22",
+      "stars": 1,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "research",
+      "name": "research",
+      "level": 2,
+      "url": "https://github.com/matcom/research",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    },
+    {
+      "id": "sistemas-distribuidos-2022",
+      "name": "sistemas-distribuidos-2022",
+      "level": 2,
+      "url": "https://github.com/matcom/sistemas-distribuidos-2022",
+      "stars": 0,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "networks-distributed",
+      "color": "#d62728"
+    },
+    {
+      "id": ".github",
+      "name": ".github",
+      "level": 2,
+      "url": "https://github.com/matcom/.github",
+      "stars": 1,
+      "language": "Unknown",
+      "description": "No description",
+      "category_id": "documentation",
+      "color": "#e377c2"
+    },
+    {
+      "id": "ia-sim-cmp-21",
+      "name": "ia-sim-cmp-21",
+      "level": 2,
+      "url": "https://github.com/matcom/ia-sim-cmp-21",
+      "stars": 8,
+      "language": "Unknown",
+      "description": "Repositorio para registrar los proyectos del curso",
+      "category_id": "ml-ai",
+      "color": "#ff7f0e"
+    },
+    {
+      "id": "cool-compiler-2020",
+      "name": "cool-compiler-2020",
+      "level": 2,
+      "url": "https://github.com/matcom/cool-compiler-2020",
+      "stars": 14,
+      "language": "Cool",
+      "description": "Proyecto base para el compilador de 4to a\u00f1o en Ciencia de la Computaci\u00f3n.",
+      "category_id": "compilers",
+      "color": "#2ca02c"
+    },
+    {
+      "id": "cool-compiler-base-2019",
+      "name": "cool-compiler-base-2019",
+      "level": 2,
+      "url": "https://github.com/matcom/cool-compiler-base-2019",
+      "stars": 4,
+      "language": "Shell",
+      "description": "Proyecto base para el compilador de 4to a\u00f1o en Ciencia de la Computaci\u00f3n",
+      "category_id": "compilers",
+      "color": "#2ca02c"
+    },
+    {
+      "id": "simspider",
+      "name": "simspider",
+      "level": 2,
+      "url": "https://github.com/matcom/simspider",
+      "stars": 0,
+      "language": "Python",
+      "description": "A visual editor and API for design, simulation and analysis of network algorithms and structures",
+      "category_id": "tools-projects",
+      "color": "#8c564b"
+    }
+  ],
+  "edges": [
+    {
+      "source": "matcom",
+      "target": "cat-programming"
+    },
+    {
+      "source": "matcom",
+      "target": "cat-ml-ai"
+    },
+    {
+      "source": "matcom",
+      "target": "cat-compilers"
+    },
+    {
+      "source": "matcom",
+      "target": "cat-networks-distributed"
+    },
+    {
+      "source": "matcom",
+      "target": "cat-algorithms"
+    },
+    {
+      "source": "matcom",
+      "target": "cat-tools-projects"
+    },
+    {
+      "source": "matcom",
+      "target": "cat-documentation"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "dashboard_v2"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "gym"
+    },
+    {
+      "source": "cat-compilers",
+      "target": "compilers"
+    },
+    {
+      "source": "cat-compilers",
+      "target": "hulk"
+    },
+    {
+      "source": "cat-algorithms",
+      "target": "codex"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ml"
+    },
+    {
+      "source": "cat-algorithms",
+      "target": "dm"
+    },
+    {
+      "source": "cat-documentation",
+      "target": "matcom.github.io"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "autoexam"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "computer-networks-projects-2025"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "computer-networks-materials-2025"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "distributed-systems-projects-2025"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "distributed-systems-materials-2025"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ml-25-26"
+    },
+    {
+      "source": "cat-algorithms",
+      "target": "adminbot"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "scr_pasd_2025"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "scr_lcp_2025"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "scr_shell_2025"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "Sim2025-proy1"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "master-ml"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ai"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "computer_networks_fall_2024"
+    },
+    {
+      "source": "cat-programming",
+      "target": "programming"
+    },
+    {
+      "source": "cat-algorithms",
+      "target": "algos"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "distributed-systems-fall-2024"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "templates"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ML-24-25"
+    },
+    {
+      "source": "cat-documentation",
+      "target": "tesis-24"
+    },
+    {
+      "source": "cat-documentation",
+      "target": "tesis-25"
+    },
+    {
+      "source": "cat-programming",
+      "target": "programming-cp"
+    },
+    {
+      "source": "cat-programming",
+      "target": "pncti"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "distributed-systems-spring-2024"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "computer-networks-2024"
+    },
+    {
+      "source": "cat-programming",
+      "target": "programming-languages"
+    },
+    {
+      "source": "cat-documentation",
+      "target": "thesis"
+    },
+    {
+      "source": "cat-algorithms",
+      "target": "cs"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "dashboard"
+    },
+    {
+      "source": "cat-programming",
+      "target": "practicas-primero-2023"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "metaheuristics"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "matcom-sist-dist-2023"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "matcon-sd-2023"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "covidsim"
+    },
+    {
+      "source": "cat-programming",
+      "target": "programming-for-data-science"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "moogle"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ML-2023"
+    },
+    {
+      "source": "cat-compilers",
+      "target": "cool-compiler-2021"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "horarios"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "domino"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ia-sim-2022"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "AI-proj-22"
+    },
+    {
+      "source": "cat-programming",
+      "target": "matcom-tester"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "forms"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "covid19-analysis"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ML-proj-22"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "research"
+    },
+    {
+      "source": "cat-networks-distributed",
+      "target": "sistemas-distribuidos-2022"
+    },
+    {
+      "source": "cat-documentation",
+      "target": ".github"
+    },
+    {
+      "source": "cat-ml-ai",
+      "target": "ia-sim-cmp-21"
+    },
+    {
+      "source": "cat-compilers",
+      "target": "cool-compiler-2020"
+    },
+    {
+      "source": "cat-compilers",
+      "target": "cool-compiler-base-2019"
+    },
+    {
+      "source": "cat-tools-projects",
+      "target": "simspider"
+    }
+  ],
+  "categories": [
+    {
+      "id": "programming",
+      "name": "Programming",
+      "color": "#1f77b4",
+      "keywords": [
+        "programming",
+        "pncti",
+        "practicas-primero",
+        "matcom-tester",
+        "programming-languages",
+        "programming-cp"
+      ]
+    },
+    {
+      "id": "ml-ai",
+      "name": "ML/AI",
+      "color": "#ff7f0e",
+      "keywords": [
+        "ml",
+        "ai",
+        "ia-",
+        "metaheuristics",
+        "master-ml",
+        "programming-for-data-science",
+        "sim2025"
+      ]
+    },
+    {
+      "id": "compilers",
+      "name": "Compilers",
+      "color": "#2ca02c",
+      "keywords": [
+        "cool-compiler",
+        "compilers",
+        "hulk"
+      ]
+    },
+    {
+      "id": "networks-distributed",
+      "name": "Networks/Distributed",
+      "color": "#d62728",
+      "keywords": [
+        "computer-networks",
+        "distributed-systems",
+        "sistemas-distribuidos",
+        "matcon-sd",
+        "matcom-sist-dist",
+        "scr_",
+        "matcon",
+        "computer_networks"
+      ]
+    },
+    {
+      "id": "algorithms",
+      "name": "Algorithms",
+      "color": "#9467bd",
+      "keywords": [
+        "algos",
+        "dm",
+        "codex",
+        "cs"
+      ]
+    },
+    {
+      "id": "tools-projects",
+      "name": "Tools/Projects",
+      "color": "#8c564b",
+      "keywords": [
+        "moogle",
+        "dashboard",
+        "autoexam",
+        "simspider",
+        "gym",
+        "adminbot",
+        "templates",
+        "forms",
+        "domino",
+        "research",
+        "covid",
+        "horarios",
+        "covidsim"
+      ]
+    },
+    {
+      "id": "documentation",
+      "name": "Documentation",
+      "color": "#e377c2",
+      "keywords": [
+        "matcom.github.io",
+        ".github",
+        "thesis",
+        "tesis-"
+      ]
+    }
+  ]
+}
