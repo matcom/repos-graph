@@ -3,26 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>matcom GitHub Organization - Repositories Graph</title>
+    <title>matcom GitHub Org - 5-Level Graph</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
         #graph { width: 100vw; height: 100vh; }
         .node { cursor: pointer; }
         .node:hover { filter: brightness(1.3); }
         .link { stroke: #30363d; stroke-opacity: 0.6; }
         .node-text { fill: #c9d1d9; font-size: 11px; pointer-events: none; text-anchor: middle; }
         .node-text-center { fill: white; font-weight: bold; font-size: 14px; }
+        .node-text-subcat { fill: #c9d1d9; font-size: 10px; font-style: italic; }
+        .node-text-issue { fill: #e67e22; font-size: 8px; }
         .tooltip { position: absolute; padding: 10px; background: rgba(13, 17, 23, 0.95); border: 1px solid #30363d; border-radius: 6px; pointer-events: none; font-size: 12px; max-width: 300px; display: none; z-index: 1000; }
         .tooltip a { color: #58a6ff; text-decoration: none; }
         .tooltip a:hover { text-decoration: underline; }
-        .legend { position: absolute; top: 20px; right: 20px; background: rgba(13, 17, 23, 0.9); border: 1px solid #30363d; border-radius: 6px; padding: 15px; font-size: 12px; }
+        .legend { position: absolute; top: 20px; right: 20px; background: rgba(13, 17, 23, 0.9); border: 1px solid #30363d; border-radius: 6px; padding: 15px; font-size: 12px; max-height: 80vh; overflow-y: auto; }
         .legend h3 { margin-bottom: 10px; color: #58a6ff; }
-        .legend-item { display: flex; align-items: center; margin-bottom: 5px; }
-        .legend-color { width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; }
+        .legend-item { display: flex; align-items: center; margin-bottom: 5px; padding: 3px; border-radius: 3px; }
+        .legend-item:hover { background: rgba(255,255,255,0.1); }
+        .legend-color { width: 14px; height: 14px; border-radius: 50%; margin-right: 8px; cursor: pointer; }
+        .legend-sub { margin-left: 22px; font-size: 11px; color: #8b949e; }
+        .legend-issue { width: 10px; height: 10px; background: #e67e22; margin-right: 8px; cursor: pointer; }
         .controls { position: absolute; bottom: 20px; left: 20px; background: rgba(13, 17, 23, 0.9); border: 1px solid #30363d; border-radius: 6px; padding: 10px; font-size: 12px; }
-        .controls button { background: #238636; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        .controls button { background: #238636; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 5px; margin-bottom: 5px; }
         .controls button:hover { background: #2ea043; }
         .repo-count { position: absolute; top: 20px; left: 20px; background: rgba(13, 17, 23, 0.9); border: 1px solid #30363d; border-radius: 6px; padding: 10px 15px; font-size: 14px; }
         .repo-count strong { color: #58a6ff; }
@@ -36,12 +41,18 @@
     <div class="controls">
         <button onclick="expandAll()">Expand All</button>
         <button onclick="collapseAll()">Collapse All</button>
+        <button onclick="expandToLevel(1)">Level 1</button>
+        <button onclick="expandToLevel(2)">Level 2</button>
+        <button onclick="expandToLevel(3)">Level 3</button>
+        <button onclick="expandToLevel(4)">Level 4</button>
         <button onclick="resetView()">Reset View</button>
     </div>
 
     <script>
         let graphData, simulation, svg, g, zoom;
         let expandedCats = new Set();
+        let expandedSubcats = new Set();
+        let expandedIssues = new Set();
         let originalNodes = [], originalEdges = [];
 
         const width = window.innerWidth, height = window.innerHeight;
@@ -65,225 +76,270 @@
                 .attr('height', height);
 
             zoom = d3.zoom()
-                .scaleExtent([0.1, 4])
+                .scaleExtent([0.05, 5])
                 .on('zoom', (e) => g.attr('transform', e.transform));
 
             svg.call(zoom);
-
             g = svg.append('g');
-
             updateGraph();
         }
 
         function getVisibleData() {
             const catNodes = originalNodes.filter(n => n.level === 1);
+            const subcatNodes = originalNodes.filter(n => n.level === 2);
             const matcomNode = originalNodes.find(n => n.level === 0);
-            const repoNodes = originalNodes.filter(n => n.level === 2);
+            const repoNodes = originalNodes.filter(n => n.level === 3);
+            const issueNodes = originalNodes.filter(n => n.level === 4);
 
-            let visibleNodes = [matcomNode, ...catNodes];
-            let visibleEdges = originalEdges.filter(e => e.source === 'matcom' || e.target === 'matcom');
+            let visibleNodes = [matcomNode];
+            let visibleEdges = [];
 
+            // Level 1: Categories
+            visibleNodes.push(...catNodes);
+            visibleEdges.push(...originalEdges.filter(e => 
+                (e.source === 'matcom' && catNodes.some(c => c.id === e.target)) ||
+                (e.target === 'matcom' && catNodes.some(c => c.id === e.source))
+            ));
+
+            // Level 2: Subcategories + Level 3: Repos + Level 4: Issues
             expandedCats.forEach(catId => {
-                const catRepos = repoNodes.filter(r => r.category_id === catId.replace('cat-', ''));
-                visibleNodes.push(...catRepos);
-                catRepos.forEach(r => {
-                    visibleEdges.push({ source: catId, target: r.id });
+                const catSubcats = subcatNodes.filter(s => s.category_id === catId.replace('cat-', ''));
+                visibleNodes.push(...catSubcats);
+                catSubcats.forEach(s => {
+                    visibleEdges.push({ source: catId, target: s.id });
+                });
+
+                expandedSubcats.forEach(subcatId => {
+                    const subcatRepos = repoNodes.filter(r => r.subcategory_id === subcatId.replace('subcat-', ''));
+                    visibleNodes.push(...subcatRepos);
+                    subcatRepos.forEach(r => {
+                        visibleEdges.push({ source: subcatId, target: r.id });
+                        // Level 4: Issues
+                        if (expandedIssues.has(r.id)) {
+                            const repoIssues = issueNodes.filter(i => i.repo === r.id);
+                            visibleNodes.push(...repoIssues);
+                            repoIssues.forEach(i => {
+                                visibleEdges.push({ source: r.id, target: i.id });
+                            });
+                        }
+                    });
                 });
             });
-
             return { nodes: visibleNodes, edges: visibleEdges };
         }
 
         function updateGraph() {
             const { nodes, edges } = getVisibleData();
-
             const nodeMap = {};
             nodes.forEach(n => nodeMap[n.id] = n);
-
             const links = edges.map(e => ({
                 source: nodeMap[e.source] || e.source,
                 target: nodeMap[e.target] || e.target
             }));
 
             if (simulation) simulation.stop();
-
             g.selectAll('.link').remove();
             g.selectAll('.node').remove();
 
-            const link = g.append('g')
-                .attr('class', 'link')
-                .selectAll('line')
-                .data(links)
-                .join('line')
-                .attr('class', 'link')
-                .attr('stroke-width', 1.5);
+            g.append('g').attr('class', 'link').selectAll('line')
+                .data(links).join('line')
+                .attr('class', 'link').attr('stroke-width', 1.5);
 
-            const node = g.append('g')
-                .attr('class', 'node')
-                .selectAll('g')
-                .data(nodes)
-                .join('g')
-                .attr('class', 'node')
-                .call(d3.drag()
-                    .on('start', dragstarted)
-                    .on('drag', dragged)
-                    .on('end', dragended));
+            const node = g.append('g').attr('class', 'node').selectAll('g')
+                .data(nodes).join('g').attr('class', 'node')
+                .call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
 
-            node.append('circle')
-                .attr('r', d => {
-                    if (d.level === 0) return 30;
-                    if (d.level === 1) return 18;
-                    return 5 + Math.min(d.stars * 0.3, 15);
-                })
-                .attr('fill', d => d.color)
-                .attr('stroke', d => d.level === 0 ? '#fff' : 'none')
-                .attr('stroke-width', d => d.level === 0 ? 3 : 0);
+            node.each(function(d) {
+                const n = d3.select(this);
+                if (d.level === 4) {
+                    n.append('rect').attr('x', -3).attr('y', -3).attr('width', 6).attr('height', 6)
+                        .attr('fill', d.color).attr('stroke', '#fff').attr('stroke-width', 0.5);
+                } else {
+                    n.append('circle').attr('r', d => {
+                        if (d.level === 0) return 30;
+                        if (d.level === 1) return 18;
+                        if (d.level === 2) return 12;
+                        return 4 + Math.min(d.stars * 0.25, 12);
+                    }).attr('fill', d => d.color)
+                    .attr('stroke', d => d.level === 0 ? '#fff' : (d.level <= 2 ? '#30363d' : 'none'))
+                    .attr('stroke-width', d => d.level === 0 ? 3 : (d.level <= 2 ? 1.5 : 0));
+                }
+            });
 
-            node.append('text')
-                .attr('class', d => d.level === 0 ? 'node-text node-text-center' : 'node-text')
-                .attr('dy', d => d.level === 0 ? '5px' : d.level === 1 ? '25px' : '20px')
-                .text(d => d.level === 0 ? 'matcom' : (d.level === 1 ? d.name : d.name.substring(0, 15) + (d.name.length > 15 ? '...' : '')));
+            node.append('text').attr('class', d => {
+                if (d.level === 0) return 'node-text node-text-center';
+                if (d.level === 2) return 'node-text node-text-subcat';
+                if (d.level === 4) return 'node-text node-text-issue';
+                return 'node-text';
+            }).attr('dy', d => {
+                if (d.level === 0) return '5px';
+                if (d.level === 1) return '25px';
+                if (d.level === 2) return '18px';
+                if (d.level === 4) return '10px';
+                return '15px';
+            }).text(d => {
+                if (d.level === 0) return 'matcom';
+                if (d.level === 4) return d.name;
+                const name = d.name;
+                return name.length > 12 ? name.substring(0, 12) + '...' : name;
+            });
 
             node.on('click', (e, d) => {
-                if (d.level === 1) {
-                    const catId = d.id;
-                    if (expandedCats.has(catId)) {
-                        expandedCats.delete(catId);
-                    } else {
-                        expandedCats.add(catId);
-                    }
-                    updateGraph();
-                    updateRepoCount();
-                } else if (d.level === 2 && d.url) {
-                    window.open(d.url, '_blank');
-                }
+                if (d.level === 1) toggleCategory(d.id);
+                else if (d.level === 2) toggleSubcategory(d.id);
+                else if (d.level === 3) toggleIssues(d.id);
+                else if (d.level === 4 && d.url) window.open(d.url, '_blank');
             });
 
             node.on('mouseover', (e, d) => {
                 const tooltip = d3.select('#tooltip');
-                let html = `<strong>${d.name}</strong><br>`;
-                if (d.description) html += `${d.description}<br>`;
-                if (d.url) html += `<a href="${d.url}" target="_blank">${d.url}</a><br>`;
-                if (d.stars > 0) html += `⭐ ${d.stars} stars<br>`;
-                if (d.language && d.language !== 'Unknown') html += `🔤 ${d.language}`;
-                tooltip.html(html)
-                    .style('display', 'block')
-                    .style('left', (e.pageX + 15) + 'px')
-                    .style('top', (e.pageY - 15) + 'px');
+                let html = '<strong>' + d.name + '</strong><br>';
+                if (d.level === 4 && d.title) html += 'Title: ' + d.title + '<br>';
+                if (d.description) html += d.description + '<br>';
+                if (d.url) html += '<a href="' + d.url + '" target="_blank">' + d.url + '</a><br>';
+                if (d.stars > 0) html += '⭐ ' + d.stars + ' stars<br>';
+                if (d.language && d.language !== 'Unknown' && d.language !== 'Category' && d.language !== 'Subcategory') {
+                    html += '🔤 ' + d.language;
+                }
+                if (d.labels && d.labels.length > 0) html += '<br>Labels: ' + d.labels.join(', ');
+                tooltip.html(html).style('display', 'block')
+                    .style('left', (e.pageX + 15) + 'px').style('top', (e.pageY - 15) + 'px');
             });
 
             node.on('mousemove', (e) => {
-                d3.select('#tooltip')
-                    .style('left', (e.pageX + 15) + 'px')
-                    .style('top', (e.pageY - 15) + 'px');
+                d3.select('#tooltip').style('left', (e.pageX + 15) + 'px').style('top', (e.pageY - 15) + 'px');
             });
 
-            node.on('mouseout', () => {
-                d3.select('#tooltip').style('display', 'none');
-            });
+            node.on('mouseout', () => d3.select('#tooltip').style('display', 'none'));
 
             simulation = d3.forceSimulation(nodes)
                 .force('link', d3.forceLink(links).id(d => d.id).distance(d => {
-                    if (d.source.level === 0) return 200;
-                    return 100;
-                }).strength(0.5))
-                .force('charge', d3.forceManyBody().strength(-300))
+                    if (d.source.level === 0) return 300;
+                    if (d.source.level === 1) return 200;
+                    if (d.source.level === 2) return 120;
+                    return 40;
+                }).strength(0.6))
+                .force('charge', d3.forceManyBody().strength(-600))
                 .force('center', d3.forceCenter(centerX, centerY))
                 .force('x', d3.forceX(centerX).strength(0.05))
                 .force('y', d3.forceY(centerY).strength(0.05))
                 .on('tick', () => {
-                    link
-                        .attr('x1', d => d.source.x)
-                        .attr('y1', d => d.source.y)
-                        .attr('x2', d => d.target.x)
-                        .attr('y2', d => d.target.y);
-
-                    node
-                        .attr('transform', d => `translate(${d.x},${d.y})`);
+                    g.selectAll('.link line')
+                        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+                        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+                    node.attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
                 });
 
-            nodes.forEach(n => {
-                n.fx = null;
-                n.fy = null;
-                if (n.level === 0) {
-                    n.fx = centerX;
-                    n.fy = centerY;
-                }
-            });
+            nodes.forEach(n => { n.fx = null; n.fy = null; if (n.level === 0) { n.fx = centerX; n.fy = centerY; } });
+        }
+
+        function toggleCategory(catId) {
+            if (expandedCats.has(catId)) {
+                expandedCats.delete(catId);
+                const catIdClean = catId.replace('cat-', '');
+                Array.from(expandedSubcats).forEach(subcatId => {
+                    const subcat = originalNodes.find(n => n.id === subcatId);
+                    if (subcat && subcat.category_id === catIdClean) {
+                        expandedSubcats.delete(subcatId);
+                        expandedIssues.delete(subcatId);
+                    }
+                });
+            } else expandedCats.add(catId);
+            updateGraph(); updateRepoCount(); setupLegend();
+        }
+
+        function toggleSubcategory(subcatId) {
+            if (expandedSubcats.has(subcatId)) {
+                expandedSubcats.delete(subcatId);
+                expandedIssues.delete(subcatId);
+            } else expandedSubcats.add(subcatId);
+            updateGraph(); updateRepoCount();
+        }
+
+        function toggleIssues(repoId) {
+            if (expandedIssues.has(repoId)) expandedIssues.delete(repoId);
+            else expandedIssues.add(repoId);
+            updateGraph(); updateRepoCount();
         }
 
         function dragstarted(e, d) {
             if (!e.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
+            d.fx = d.x; d.fy = d.y;
         }
-
-        function dragged(e, d) {
-            d.fx = e.x;
-            d.fy = e.y;
-        }
-
+        function dragged(e, d) { d.fx = e.x; d.fy = e.y; }
         function dragended(e, d) {
             if (!e.active) simulation.alphaTarget(0);
-            if (d.level !== 0) {
-                d.fx = null;
-                d.fy = null;
-            }
+            if (d.level !== 0) { d.fx = null; d.fy = null; }
         }
 
         function setupLegend() {
             const legend = d3.select('#legend');
             legend.html('<h3>Categories</h3>');
             graphData.categories.forEach(cat => {
-                const item = legend.append('div').attr('class', 'legend-item');
-                item.append('div')
-                    .attr('class', 'legend-color')
-                    .style('background', cat.color)
-                    .style('cursor', 'pointer')
-                    .on('click', () => {
-                        const catId = 'cat-' + cat.id;
-                        if (expandedCats.has(catId)) {
-                            expandedCats.delete(catId);
-                        } else {
-                            expandedCats.add(catId);
-                        }
-                        updateGraph();
-                        updateRepoCount();
+                const catId = 'cat-' + cat.id;
+                const isExpanded = expandedCats.has(catId);
+                const item = legend.append('div').attr('class', 'legend-item')
+                    .style('background', isExpanded ? 'rgba(255,255,255,0.05)' : 'transparent');
+                item.append('div').attr('class', 'legend-color').style('background', cat.color).on('click', () => toggleCategory(catId));
+                item.append('span').text(cat.name).on('click', () => toggleCategory(catId));
+                if (isExpanded) {
+                    cat.subcategories.forEach(subcat => {
+                        const subcatId = 'subcat-' + subcat.id;
+                        const subIsExpanded = expandedSubcats.has(subcatId);
+                        const subItem = legend.append('div').attr('class', 'legend-item legend-sub')
+                            .style('background', subIsExpanded ? 'rgba(255,255,255,0.03)' : 'transparent');
+                        subItem.append('div').attr('class', 'legend-color').style('background', cat.color)
+                            .style('opacity', 0.6).style('width', '10px').style('height', '10px')
+                            .on('click', () => toggleSubcategory(subcatId));
+                        subItem.append('span').text(subcat.name).style('opacity', subIsExpanded ? 1 : 0.7)
+                            .on('click', () => toggleSubcategory(subcatId));
                     });
-                item.append('span').text(cat.name);
+                }
             });
+            const issueItem = legend.append('div').attr('class', 'legend-item')
+                .style('margin-top', '10px').style('border-top', '1px solid #30363d').style('padding-top', '10px');
+            issueItem.append('div').attr('class', 'legend-issue');
+            issueItem.append('span').text('Issues (Level 4)').style('color', '#e67e22');
         }
 
         function updateRepoCount() {
-            const totalRepos = originalNodes.filter(n => n.level === 2).length;
-            const visibleRepos = expandedCats.size > 0
-                ? Array.from(expandedCats).reduce((acc, catId) => {
-                    return acc + originalNodes.filter(n => n.level === 2 && n.category_id === catId.replace('cat-', '')).length;
-                }, 0)
-                : 0;
-            d3.select('#repoCount').html(`<strong>${visibleRepos}</strong> / ${totalRepos} repos visible<br><small>Click categories to expand</small>`);
+            const totalRepos = originalNodes.filter(n => n.level === 3).length;
+            const totalIssues = originalNodes.filter(n => n.level === 4).length;
+            const visibleRepos = expandedSubcats.size > 0 ? Array.from(expandedSubcats).reduce((acc, subcatId) => {
+                return acc + originalNodes.filter(n => n.level === 3 && n.subcategory_id === subcatId.replace('subcat-', '')).length;
+            }, 0) : 0;
+            const visibleIssues = expandedIssues.size > 0 ? Array.from(expandedIssues).reduce((acc, repoId) => {
+                return acc + originalNodes.filter(n => n.level === 4 && n.repo === repoId).length;
+            }, 0) : 0;
+            d3.select('#repoCount').html('<strong>' + visibleRepos + '</strong> / ' + totalRepos + ' repos<br>' +
+                '<strong>' + visibleIssues + '</strong> / ' + totalIssues + ' issues<br><small>Click: cat → subcat → repo → issues</small>');
         }
 
         function expandAll() {
-            graphData.categories.forEach(cat => expandedCats.add('cat-' + cat.id));
-            updateGraph();
-            updateRepoCount();
+            graphData.categories.forEach(cat => {
+                expandedCats.add('cat-' + cat.id);
+                cat.subcategories.forEach(subcat => expandedSubcats.add('subcat-' + subcat.id));
+            });
+            originalNodes.filter(n => n.level === 3).forEach(repo => expandedIssues.add(repo.id));
+            updateGraph(); updateRepoCount(); setupLegend();
         }
 
         function collapseAll() {
-            expandedCats.clear();
-            updateGraph();
-            updateRepoCount();
+            expandedCats.clear(); expandedSubcats.clear(); expandedIssues.clear();
+            updateGraph(); updateRepoCount(); setupLegend();
         }
 
-        function resetView() {
-            svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        function expandToLevel(level) {
+            collapseAll();
+            if (level >= 1) graphData.categories.forEach(cat => expandedCats.add('cat-' + cat.id));
+            if (level >= 2) graphData.categories.forEach(cat => cat.subcategories.forEach(subcat => expandedSubcats.add('subcat-' + subcat.id)));
+            if (level >= 3) originalNodes.filter(n => n.level === 3).forEach(repo => expandedSubcats.add('subcat-' + repo.subcategory_id));
+            if (level >= 4) originalNodes.filter(n => n.level === 3).forEach(repo => expandedIssues.add(repo.id));
+            updateGraph(); updateRepoCount(); setupLegend();
         }
 
-        window.addEventListener('resize', () => {
-            const newWidth = window.innerWidth, newHeight = window.innerHeight;
-            svg.attr('width', newWidth).attr('height', newHeight);
-        });
+        function resetView() { svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity); }
+        window.addEventListener('resize', () => svg.attr('width', window.innerWidth).attr('height', window.innerHeight));
     </script>
 </body>
 </html>
